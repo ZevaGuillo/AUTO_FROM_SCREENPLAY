@@ -1,50 +1,49 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: N/A -> 1.0.0 (initial template population)
+- All 5 principle placeholders filled with Screenplay QA-specific content
+- Added 2 new sections: Test Architecture Standards, Technology Stack Requirements
+- Removed template comments and example placeholders
+- Templates verified: spec-template.md (aligned), tasks-template.md (aligned), plan-template.md (aligned)
+- No command files to update (none exist)
+-->
+# Serenity Screenplay QA Automation Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Business-First Testing
+Every test scenario MUST focus on business behavior rather than technical implementation. Tests must validate user journeys from the perspective of business value delivered. Technical details of UI interactions MUST be abstracted into reusable Interactions and Tasks. Tests MUST answer "what business rule is being validated" not "what button is clicked".
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Screenplay Pattern Adherence
+All automation MUST follow the Screenplay Pattern with clear separation of: Actors (who performs actions), Tasks (business-level activities), Interactions (technical UI actions), and Questions (system state verifications). Actors MUST have specific Abilities (e.g., BrowseTheWeb). Tasks MUST represent business intentions, NOT technical procedures. WebDriver MUST NOT be used directly in Step Definitions.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. BDD Declarative Scenarios
+Gherkin feature files MUST be declarative, business-focused, and free of technical implementation details. Scenario steps MUST use business language. Given-When-Then structure MUST express business rules. Technical details about locators, waits, or selectors MUST NOT appear in feature files.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Independent Test Isolation
+Each scenario MUST be independently executable without dependencies on other scenarios. Test data MUST be self-contained within each scenario. Shared state between tests MUST be minimized. No scenario can rely on execution order or shared database state that would cause failures when run in isolation.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Single Responsibility in Test Artifacts
+Tasks MUST have one business purpose. Interactions MUST perform one technical action. Questions MUST verify one aspect of system state. Step Definitions MUST only delegate to Tasks, never contain business logic. This ensures maximum reusability and maintainability.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Test Architecture Standards
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Layer Structure
+Test code MUST be organized in distinct layers: Abilities (actor capabilities), Tasks (business activities), Interactions (UI operations), Questions (state verification), UI layer (page object locators), StepDefinitions (glue code), and Runners (execution configuration). Each layer MUST import only from layers below it.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### POM vs Screenplay Distinction
+POM-based scenarios from the existing framework MUST NOT be migrated or reused in Screenplay implementations. New scenarios MUST demonstrate behavior not already covered. Screenplay MUST leverage Tasks for business flows while POM remains for existing coverage. This ensures clear differentiation and prevents architectural confusion.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Technology Stack Requirements
+
+### Framework Versions
+Serenity-core version MUST be 3.x or compatible. Cucumber version MUST be 7.x or compatible with Serenity. Java version MUST be 11 or higher. Build tool MUST be Gradle with serenity.properties configuration. WebDriver base URL MUST be configurable via serenity.conf.
+
+### Reporting Configuration
+Serenity reports MUST capture screenshots only on failure. HTML reports MUST generate after test execution. JSON output MUST be enabled for CI integration. Report location MUST be configurable.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+All PRs and reviews MUST verify compliance with Screenplay Pattern principles. Any violation of Actor/Task/Interaction separation MUST be rejected. Gherkin scenarios containing technical locators or selectors MUST be refactored before merge. Test architects MUST approve any new Task that combines multiple business activities. Use `.specify/templates/spec-template.md` for defining new test scenarios.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-18 | **Last Amended**: 2026-03-18
