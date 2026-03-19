@@ -1,25 +1,28 @@
 package com.ticketing.tasks;
 
-import com.ticketing.interactions.ClickElement;
-import com.ticketing.interactions.WaitFor;
 import com.ticketing.ui.EventDetailPage;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actors.OnStage;
+import net.serenitybdd.screenplay.Tasks;
+import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.waits.WaitUntil;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class AddSelectedSeatsToCart implements Task {
 
-    private AddSelectedSeatsToCart() {
+    public AddSelectedSeatsToCart() {
+        // Constructor público necesario para la inyección de dependencias
     }
 
     public static AddSelectedSeatsToCart now() {
-        return new AddSelectedSeatsToCart();
+        return Tasks.instrumented(AddSelectedSeatsToCart.class);
     }
 
     @Override
-    public <T extends net.serenitybdd.screenplay.Actor> void performAs(T actor) {
+    public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            WaitFor.elementVisible(EventDetailPage.ADD_TO_CART_BUTTON),
-            ClickElement.on(EventDetailPage.ADD_TO_CART_BUTTON)
+            WaitUntil.the(EventDetailPage.RESERVE_AND_ADD_TO_CART_BUTTON, isVisible()),
+            Click.on(EventDetailPage.RESERVE_AND_ADD_TO_CART_BUTTON)
         );
     }
 }

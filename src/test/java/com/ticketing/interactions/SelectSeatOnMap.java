@@ -21,7 +21,9 @@ public class SelectSeatOnMap implements Interaction {
     @Override
     public <T extends net.serenitybdd.screenplay.Actor> void performAs(T actor) {
         Target seatElement = Target.the("seat " + seatId)
-                .located(By.id("seat-" + seatId));
+            .located(By.xpath(
+                "//button[normalize-space()='" + seatId + "']"
+            ));
         seatElement.resolveFor(actor).click();
     }
 }

@@ -7,6 +7,7 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import net.serenitybdd.core.Serenity;
 
 public class Hooks {
 
@@ -19,7 +20,11 @@ public class Hooks {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         
+        ChromeDriver driver = new ChromeDriver(options);
+        
         OnStage.setTheStage(new OnlineCast());
-        OnStage.theActorCalled("Guest User").can(BrowseTheWeb.with(new ChromeDriver(options)));
+        OnStage.theActorCalled("Guest User").can(BrowseTheWeb.with(driver));
+        
+        driver.navigate().to("http://localhost:3000");
     }
 }

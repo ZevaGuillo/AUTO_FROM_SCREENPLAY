@@ -5,17 +5,28 @@ import org.openqa.selenium.By;
 
 public class EventsListPage {
 
+    // Contenedor principal (más estable basado en heading)
     public static final Target EVENTS_CONTAINER = Target.the("events container")
-            .located(By.cssSelector("[data-testid='events-list']"));
+            .located(By.xpath("//h1[text()='Events']/ancestor::div[1]"));
 
-    public static final Target SEARCH_FIELD = Target.the("search field")
-            .located(By.cssSelector("[data-testid='search-field']"));
+    // Lista de eventos (cards)
+    public static final Target EVENT_CARDS = Target.the("event cards")
+            .located(By.cssSelector("div[data-slot='card']"));
 
-    public static Target eventLink(String eventName) {
-        return Target.the(eventName + " event link")
-                .located(By.xpath("//a[contains(text(),'" + eventName + "')]"));
+    // Nombre del evento
+    public static Target eventTitle(String eventName) {
+        return Target.the(eventName + " title")
+                .located(By.xpath("//h2[normalize-space()='" + eventName + "']"));
     }
 
-    private EventsListPage() {
+    // Botón REAL de navegación (Select Seats)
+    public static Target selectSeatsButton(String eventName) {
+        return Target.the("Select seats for " + eventName)
+                .located(By.xpath(
+                        "//h2[normalize-space()='" + eventName + "']" +
+                        "/ancestor::div[@data-slot='card']//a[normalize-space()='Select Seats']"
+                ));
     }
+
+    private EventsListPage() {}
 }

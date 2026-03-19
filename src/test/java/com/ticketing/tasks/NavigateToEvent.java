@@ -21,7 +21,7 @@ public class NavigateToEvent implements Task {
     public <T extends net.serenitybdd.screenplay.Actor> void performAs(T actor) {
         actor.attemptsTo(
                 WaitFor.elementVisible(EventsListPage.EVENTS_CONTAINER),
-                ClickElement.on(EventsListPage.eventLink(eventName))
+                ClickElement.on(EventsListPage.selectSeatsButton(eventName))
         );
     }
 }
