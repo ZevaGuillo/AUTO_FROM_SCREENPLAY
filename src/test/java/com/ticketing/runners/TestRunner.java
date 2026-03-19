@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
                 "com.ticketing.stepdefinitions",
                 "net.serenitybdd.screenplay.entering"
         },
-        tags = "@all",
+        tags = "@admin",
         plugin = {
                 "pretty",
                 "json:target/cucumber-reports/cucumber.json",
