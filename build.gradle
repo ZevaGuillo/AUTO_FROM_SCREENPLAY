@@ -53,6 +53,7 @@ test {
     useJUnitPlatform()
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
+    systemProperty "environment", "default"
 }
 
 serenity {
